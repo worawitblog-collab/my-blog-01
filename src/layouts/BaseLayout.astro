@@ -18,7 +18,7 @@ const pageTitle = title ? `${title} · ${SITE.title}` : `${SITE.title} — ${SIT
 ---
 
 <!doctype html>
-<html lang="th" data-theme="system">
+<html lang="th" data-theme="system" data-base={import.meta.env.BASE_URL}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -96,6 +96,22 @@ const pageTitle = title ? `${title} · ${SITE.title}` : `${SITE.title} — ${SIT
             },
             { passive: true },
           );
+        } catch {}
+      })();
+    </script>
+  <script is:inline>
+      (() => {
+        try {
+          const root = document.documentElement;
+          const base = ((root.dataset.base || '/') + '/').replace(/\/{2,}$/, '/');
+          if (base === '/') return;
+          const prepend = (el, attr) => {
+            const v = el.getAttribute(attr);
+            if (!v || !v.startsWith('/') || v.startsWith('//') || v.startsWith(base)) return;
+            el.setAttribute(attr, base + v.slice(1));
+          };
+          document.querySelectorAll('a[href]').forEach((el) => prepend(el, 'href'));
+          document.querySelectorAll('[src]').forEach((el) => prepend(el, 'src'));
         } catch {}
       })();
     </script>
