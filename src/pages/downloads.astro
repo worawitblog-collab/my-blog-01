@@ -1,0 +1,134 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import Collapse from '../components/Collapse.astro';
+
+const categories = [
+  {
+    title: 'คณิตศาสตร์ ม.ต้น',
+    color: '#14b8a6',
+    files: [
+      { name: 'สรุปสูตรคณิตศาสตร์มัธยมต้น', file: 'middle-math-formulas.pdf', size: '980 KB' },
+      { name: 'แบบฝึกหัดสมการและอสมการพร้อมเฉลย', file: 'equations-exercises.pdf', size: '540 KB' },
+      { name: 'เรขาคณิตเบื้องต้น: โน้ตสรุป', file: 'basic-geometry-notes.pdf', size: '720 KB' },
+    ],
+  },
+  {
+    title: 'คณิตศาสตร์ ม.ปลาย',
+    color: '#14b8a6',
+    files: [
+      { name: 'สรุปสูตรคณิตศาสตร์มัธยมปลาย', file: 'math-formulas.pdf', size: '1.2 MB' },
+      { name: 'ชีทแคลคูลัส: อนุพันธ์และอินทิกรัล', file: 'calculus-cheatsheet.pdf', size: '980 KB' },
+      { name: 'แบบฝึกหัดฟังก์ชันและกราฟพร้อมเฉลย', file: 'function-exercises.pdf', size: '650 KB' },
+    ],
+  },
+  {
+    title: 'ฟิสิกส์',
+    color: '#06b6d4',
+    files: [
+      { name: 'แบบฝึกหัดฟิสิกส์ กลศาสตร์', file: 'mechanics-exercises.pdf', size: '830 KB' },
+      { name: 'สรุปสูตรไฟฟ้าและแม่เหล็ก', file: 'electricity-magnetism.pdf', size: '1.1 MB' },
+      { name: 'คลื่นและแสง: โน้ตสรุป', file: 'waves-optics-notes.pdf', size: '720 KB' },
+    ],
+  },
+  {
+    title: 'คอมพิวเตอร์',
+    color: '#0ea5e9',
+    files: [
+      { name: 'Cheatsheet: Big-O และ Data Structure', file: 'cs-cheatsheet.pdf', size: '450 KB' },
+      { name: 'โจทย์ฝึก Algorithm พร้อมเฉลย', file: 'algo-problems.pdf', size: '2.3 MB' },
+    ],
+  },
+];
+---
+
+<BaseLayout title="ดาวน์โหลด" description="ไฟล์สรุปและเอกสารประกอบการเรียน">
+  <Breadcrumb items={[{ label: 'ดาวน์โหลด' }]} />
+
+  <div class="page-head">
+    <h1>ดาวน์โหลด</h1>
+    <p>เอกสารสรุปเนื้อหา, แบบฝึกหัด, โจทย์ และไฟล์ประกอบการเรียนตามหมวดหมู่</p>
+  </div>
+
+  {
+    categories.map((cat) => (
+      <Collapse title={cat.title} color={cat.color} count={cat.files.length}>
+        <div class="dl-grid">
+          {
+            cat.files.map((f) => (
+              <a class="dl-item" href={`/downloads/${f.file}`} download>
+                <span class="dl-item__badge">PDF</span>
+                <h3>{f.name}</h3>
+                <div class="dl-item__meta">
+                  <span>{f.size}</span>
+                  <span>ดาวน์โหลด ↓</span>
+                </div>
+              </a>
+            ))
+          }
+        </div>
+      </Collapse>
+    ))
+  }
+</BaseLayout>
+
+<style>
+  .dl-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 0.8rem;
+  }
+
+  .dl-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem 1.15rem;
+    color: inherit;
+    box-shadow: 0 1px 2px rgb(15 46 49 / 0.04);
+    transition:
+      transform 0.3s var(--ease-smooth),
+      box-shadow 0.3s var(--ease-smooth),
+      border-color 0.25s ease;
+  }
+
+  .dl-item:hover,
+  .dl-item:focus-visible {
+    border-color: var(--accent);
+    box-shadow: var(--shadow), 0 12px 28px -12px color-mix(in srgb, var(--accent) 60%, transparent);
+    transform: translateY(-3px);
+    text-decoration: none;
+  }
+
+  .dl-item:focus-visible {
+    outline: none;
+  }
+
+  .dl-item__badge {
+    align-self: flex-start;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--accent);
+    background: var(--accent-soft);
+    border-radius: 999px;
+    padding: 0.05rem 0.55rem;
+  }
+
+  .dl-item h3 {
+    margin: 0;
+    font-size: 0.98rem;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  .dl-item__meta {
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-muted);
+    font-size: 0.82rem;
+  }
+</style>

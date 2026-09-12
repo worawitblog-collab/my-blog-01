@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f766e"/>
+      <stop offset="1" stop-color="#04302e"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#ffffff" stroke-opacity="0.08"/>
+    </pattern>
+  </defs>
+
+  <rect width="800" height="450" fill="url(#bg)"/>
+  <rect width="800" height="450" fill="url(#grid)"/>
+
+  <circle cx="660" cy="90" r="130" fill="none" stroke="#ffffff" stroke-opacity="0.18" stroke-width="2"/>
+  <circle cx="660" cy="90" r="80" fill="none" stroke="#ffffff" stroke-opacity="0.12" stroke-width="2"/>
+  <path d="M120 360 L220 200 L320 360 Z" fill="none" stroke="#fbbf24" stroke-opacity="0.5" stroke-width="3"/>
+  <line x1="70" y1="330" x2="370" y2="330" stroke="#ffffff" stroke-opacity="0.35" stroke-width="2"/>
+  <rect x="90" y="180" width="10" height="150" fill="#fbbf24" fill-opacity="0.55"/>
+  <rect x="310" y="230" width="10" height="100" fill="#fbbf24" fill-opacity="0.55"/>
+
+  <text x="520" y="300" font-family="Georgia, 'Times New Roman', serif" font-size="190" font-style="italic" fill="#ffffff" fill-opacity="0.22">π</text>
+  <text x="600" y="380" font-family="Georgia, 'Times New Roman', serif" font-size="120" fill="#fbbf24" fill-opacity="0.35">Σ</text>
+  <text x="430" y="110" font-family="Georgia, 'Times New Roman', serif" font-size="64" font-style="italic" fill="#ffffff" fill-opacity="0.85">a² + b² = c²</text>
+  <text x="60" y="100" font-family="Georgia, 'Times New Roman', serif" font-size="44" fill="#ffffff" fill-opacity="0.4">∫ f(x) dx</text>
+</svg>

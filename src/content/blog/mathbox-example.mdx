@@ -1,0 +1,66 @@
+---
+title: 'ตัวอย่างการใช้คอมโพเนนท์ MathBox'
+description: 'ตัวอย่างการแทรก บทนิยาม กฎ สมบัติ ทฤษฎีบท บทแทรก และตัวอย่าง ในบทความด้วยคอมโพเนนท์ MathBox.astro'
+category: math
+cover: '/covers/math.svg'
+pubDate: 2026-08-29
+tags: ['ตัวอย่าง', 'MathBox']
+author: admin
+draft: true
+---
+
+import MathBox from '../../components/MathBox.astro';
+
+คอมโพเนนท์ `MathBox` ใช้แสดงกล่องเนื้อหาคณิตศาสตร์แบบต่าง ๆ โดยส่ง prop `type` เพื่อเลือกชนิด ได้แก่ `definition`, `rule`, `property`, `theorem`, `corollary`, `example` และสามารถระบุ `name` สำหรับหมายเลขกำกับได้
+
+## 1. บทนิยาม (definition)
+
+<MathBox type="definition" name="1.1">
+  **สมการกำลังสอง** คือสมการในรูป $ax^2 + bx + c = 0$ โดยที่ $a \neq 0$ และ $a, b, c$ เป็นจำนวนจริง
+</MathBox>
+
+## 2. กฎ (rule)
+
+<MathBox type="rule" name="กฎของเครื่องหมาย">
+  ถ้า $b^2 - 4ac > 0$ แสดงว่าสมการมีสองคำตอบที่แตกต่างกัน
+</MathBox>
+
+## 3. สมบัติ (property)
+
+<MathBox type="property">
+  ถ้า $x_1$ และ $x_2$ เป็นคำตอบของ $ax^2 + bx + c = 0$ แล้ว
+  $$x_1 + x_2 = -\frac{b}{a} \quad \text{และ} \quad x_1 \cdot x_2 = \frac{c}{a}$$
+</MathBox>
+
+## 4. ทฤษฎีบท (theorem)
+
+<MathBox type="theorem" name="1.2">
+  คำตอบของสมการ $ax^2 + bx + c = 0$ คือ
+  $$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$
+</MathBox>
+
+## 5. บทแทรก (corollary)
+
+<MathBox type="corollary" name="1.3">
+  ถ้า $b^2 - 4ac = 0$ แล้วสมการมีคำตอบเดียว คือ $x = -\dfrac{b}{2a}$
+</MathBox>
+
+## 6. ตัวอย่าง (example)
+
+<MathBox type="example" name="1.4">
+  จงแก้สมการ $x^2 - 5x + 6 = 0$
+
+  **วิธีทำ** แยกตัวประกอบได้ $(x - 2)(x - 3) = 0$ ดังนั้น $x = 2$ หรือ $x = 3$
+</MathBox>
+
+## 7. ใช้ prop `id` สำหรับลิงก์กระโดด
+
+ระบุ `id` ให้กล่องเช่นทฤษฎีบทด้านล่าง แล้วอ้างอิงด้วย `<a href="#idนั้น">` ได้เลย เช่น [กระโดดไปทฤษฎีบท 1.5](#thm-1-5) หรือ [กลับมาบทนิยาม 1.1](#def-1-1)
+
+<MathBox type="definition" id="def-1-1" name="1.1">
+  **สมการกำลังสอง** คือสมการในรูป $ax^2 + bx + c = 0$ โดยที่ $a \neq 0$ และ $a, b, c$ เป็นจำนวนจริง
+</MathBox>
+
+<MathBox type="theorem" id="thm-1-5" name="1.5">
+  ถ้า $b^2 - 4ac$ เป็นกำลังสองสมบูรณ์และ $a, b, c$ เป็นจำนวนเต็ม แล้วคำตอบของ $ax^2 + bx + c = 0$ เป็นจำนวนตรรกยะ
+</MathBox>

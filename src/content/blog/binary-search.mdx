@@ -1,0 +1,60 @@
+---
+title: 'Binary Search: อัลกอริทึมแรกที่ทุกคนควรเข้าใจ'
+description: 'ค้นหาใน 1 พันล้านข้อมูลด้วย 30 ครั้ง เทคนิค Divide and Conquer ที่ทรงพลังที่สุด'
+category: computer
+cover: '/covers/binary-search.svg'
+pubDate: 2026-06-05
+tags: ['อัลกอริทึม', 'การค้นหา']
+author: admin
+---
+
+import Callout from '../../components/Callout.astro';
+
+## ไอเดียหลัก
+
+Binary Search ทำงานได้เมื่อข้อมูล**เรียงลำดับแล้ว** โดยเปรียบเทียบเป้าหมายกับค่าตรงกลาง:
+
+- ถ้าเท่ากัน → เจอแล้ว
+- ถ้าเป้าหมาย **น้อยกว่า** → ตัดครึ่งขวาทิ้ง
+- ถ้าเป้าหมาย **มากกว่า** → ตัดครึ่งซ้ายทิ้ง
+
+ทุกครั้งที่เทียบ 1 ครั้ง พื้นที่ค้นหาเหลือครึ่งเดียว จำนวนครั้งสูงสุดจึงเป็น $\log_2 n$
+
+$$
+T(n) = T\!\left(\frac{n}{2}\right) + O(1) \;\Longrightarrow\; O(\log n)
+$$
+
+## โค้ด Python
+
+```python
+def binary_search(nums, target):
+    lo, hi = 0, len(nums) - 1
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        if nums[mid] == target:
+            return mid
+        elif nums[mid] < target:
+            lo = mid + 1
+        else:
+            hi = mid - 1
+    return -1
+```
+
+<Callout type="warning">จุดบั๊กคลาสสิกคือ `mid = (lo + hi) / 2` — ในภาษาที่ integer overflow
+เป็นไปได้ (C, Java) ให้ใช้ `mid = lo + (hi - lo) / 2` แทน</Callout>
+
+## พลังของ log
+
+| n | Linear Search | Binary Search |
+| ---: | ---: | ---: |
+| 1,000 | ~1,000 ครั้ง | ~10 ครั้ง |
+| 1,000,000 | ~1,000,000 ครั้ง | ~20 ครั้ง |
+| 1,000,000,000 | ~10⁹ ครั้ง | ~30 ครั้ง |
+
+<Callout type="tip">Binary Search ไม่ได้ใช้แค่ "หาตัวเลข" — ใช้กับคำถามแบบ yes/no ที่ตอบ monotonic
+ได้ เช่น "capacity ขั้นต่ำที่ขนส่งของเสร็จใน D วันคือเท่าไร" (LeetCode 1011)</Callout>
+
+## สรุป
+
+Binary Search คือตัวอย่างแรกของ **Divide and Conquer** — ลดขนาดปัญหาครึ่งหนึ่งทุก step
+เข้าใจหลักการนี้แล้ว จะช่วยปลดล็อกโจทย์ optimization อีกมากมายในอนาคต

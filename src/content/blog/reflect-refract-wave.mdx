@@ -1,0 +1,85 @@
+---
+title: 'ทฤษฎีบบทวินาม (Binomial Theorem)'
+description: 'ทฤษฎีบบทวินาม (Binomial Theorem), สัมประสิทธิ์ทวินาม (Binomial Coefficients), การขยายกำลังสองของพหุนาม, การขยายกำลังสามของพหุนาม, การขยายกำลัง n ของพหุนาม, การประยุกต์ใช้ทฤษฎีบบทวินาม'
+category: math
+cover: '/covers/binomial-theorem/binomial-theorem.jpeg'
+pubDate: 2026-09-06
+tags: ['binomial theorem', 'ทฤษฎีบบทวินาม']
+author: Worawit
+draft: true
+---
+
+import Figure from '../../components/Figure.astro';
+
+## 1. ทฤษฎีบททวินาม (Binomial Theorem)
+
+พิจารณา $\;\left(x+y\right)^2\;$
+
+$$
+    \begin{align*}
+        \left(x+y\right)^2 &= x^2 + xy + yx + y^2 \\
+                           &= x^2 + 2xy + y^2
+    \end{align*}
+$$
+
+และพิจารณา $\;\left(x+y\right)^3\;$
+
+$$
+    \begin{align*}
+        \left(x+y\right)^3 &= \left(x+y\right)\left(x+y\right)^2 \\
+                           &= \left(x+y\right)\left(x^2 + 2xy + y^2\right) \\
+                           &= x^3 + 3x^2y + 3xy^2 + y^3
+    \end{align*}
+$$
+
+ในที่นี้เราจะศึกษาทวินามที่มีเลขชี้กำลังเป็นจำนวนเต็มบวก \(n\) โดยเราสามารถขยายพจน์ของทวินาม \((x+y)^n\) โดยใช้สูตรทฤษฎีบททวินาม (Binomial Theorem)  
+
+บททวินาม (Binomial Theorem) คือ สูตรทางคณิตศาสตร์ที่ใช้ในการกระจายพจน์ของพหุนามยกกำลัง รูปแบบ \((x + y)^n\) 
+ หรือ \((a + b)^n\) เมื่อ \(n\) เป็นจำนวนเต็มบวกหรือศูนย์ โดยช่วยให้เราสามารถหาผลลัพธ์ของการยกกำลังสูงๆ
+ ได้อย่างรวดเร็วโดยไม่ต้องคูณทีละวงเล็บ มีสูตรดังนี้:
+
+ $$
+    \begin{align*}
+        (x + y)^n  &= \binom{n}{0} x^n y^0 + \binom{n}{1} x^{n-1} y^1 + \binom{n}{2} x^{n-2} y^2 + \cdots + \binom{n}{n} x^0 y^n    \\
+                    &= \binom{n}{0} x^n + \binom{n}{1} x^{n-1} y^1 + \binom{n}{2} x^{n-2} y^2 + \cdots + \binom{n}{n} y^n    \\
+                   &= \sum_{k=0}^{n} \binom{n}{k} x^{n-k} y^k
+    \end{align*} 
+ $$
+
+
+
+
+
+
+
+
+
+<Figure
+  src="/covers/binomial-theorem/binomial-theorem-01.svg"
+  alt="แสดงการขยายพจน์ของทฤษฎีบททวินาม"
+  width={400}
+  height={200}
+  caption="รูปที่ 1: การวัดมุม"
+/>
+
+การวัดมุมอาจวัดได้หลายรอบ ดังรูป 2
+
+<Figure
+  src="/covers/trigonometry/trigonometry-01-02.svg"
+  alt="แสดงการวัดมุม"
+  width={400}
+  height={200}
+  caption="รูปที่ 2: การวัดมุมหลายรอบ"
+/>
+
+
+
+  
+
+  
+
+## 2. การหักเห (Refraction) ของคลื่น  
+
+
+
+ 

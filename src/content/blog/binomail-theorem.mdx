@@ -1,0 +1,104 @@
+---
+title: 'ทฤษฎีบบทวินาม (Binomial Theorem)'
+description: 'ทฤษฎีบบทวินาม (Binomial Theorem), สัมประสิทธิ์ทวินาม (Binomial Coefficients), การขยายกำลังสองของพหุนาม, การขยายกำลังสามของพหุนาม, การขยายกำลัง n ของพหุนาม, การประยุกต์ใช้ทฤษฎีบบทวินาม'
+category: math
+cover: '/covers/binomial-theorem/binomial-theorem.jpeg'
+pubDate: 2026-09-06
+tags: ['binomial theorem', 'ทฤษฎีบบทวินาม']
+author: Worawit
+draft: false
+---
+
+import Figure from '../../components/Figure.astro';
+import Callout from '../../components/Callout.astro';
+import MathBox from '../../components/MathBox.astro';
+
+## 1. ทฤษฎีบททวินาม (Binomial Theorem)
+
+พิจารณา $\;\left(x+y\right)^2\;$
+
+$$
+    \begin{align*}
+        \left(x+y\right)^2 &= x^2 + xy + yx + y^2 \\
+                           &= x^2 + 2xy + y^2
+    \end{align*}
+$$
+
+และพิจารณา $\;\left(x+y\right)^3\;$
+
+$$
+    \begin{align*}
+        \left(x+y\right)^3 &= \left(x+y\right)\left(x+y\right)^2 \\
+                           &= \left(x+y\right)\left(x^2 + 2xy + y^2\right) \\
+                           &= x^3 + 3x^2y + 3xy^2 + y^3
+    \end{align*}
+$$
+
+ในที่นี้เราจะศึกษาทวินามที่มีเลขชี้กำลังเป็นจำนวนเต็มบวก $n$ โดยเราสามารถขยายพจน์ของทวินาม $\left(x+y\right)^n$ โดยใช้สูตรทฤษฎีบททวินาม (Binomial Theorem)  
+
+ทฤษฎีบททวินาม (Binomial Theorem) คือ สูตรทางคณิตศาสตร์ที่ใช้ในการกระจายพจน์ของพหุนามยกกำลัง รูปแบบ $\left(x+y\right)^n$ 
+ หรือ $\left(a+b\right)^n$ เมื่อ $n$ เป็นจำนวนเต็มบวกหรือศูนย์ โดยช่วยให้เราสามารถหาผลลัพธ์ของการยกกำลังสูงๆ
+ ได้อย่างรวดเร็วโดยไม่ต้องคูณทีละวงเล็บ มีสูตรดังนี้:
+
+ $$
+    \begin{align*}
+        (x + y)^n  &= \binom{n}{0} x^n y^0 + \binom{n}{1} x^{n-1} y^1 + \binom{n}{2} x^{n-2} y^2 + \cdots + \binom{n}{n} x^0 y^n    \\
+                    &= \binom{n}{0} x^n + \binom{n}{1} x^{n-1} y^1 + \binom{n}{2} x^{n-2} y^2 + \cdots + \binom{n}{n} y^n    \\
+                   &= \sum_{k=0}^{n} \binom{n}{k} x^{n-k} y^k
+    \end{align*} 
+ $$
+
+
+<MathBox type="example" name="1">
+  จงกระจาย $\left(x+y\right)^5$
+
+  **วิธีทำ** 
+  $$
+    \begin{align*}
+        (x + y)^5  &= \binom{5}{0} x^5 y^0 + \binom{5}{1} x^{4} y^1 + \binom{5}{2} x^{3} y^2 + \binom{5}{3} x^{2} y^3 + \binom{5}{4} x^{1} y^4 + \binom{5}{5} x^{0} y^5    \\
+                    &= 1\cdot x^5 + 5\cdot x^{4}y + 10\cdot x^{3}y^2 + 10\cdot x^{2}y^3 + 5\cdot xy^4 + 1\cdot y^5    \\
+                   &= x^5 + 5x^{4}y + 10x^{3}y^2 + 10x^{2}y^3 + 5xy^4 + y^5
+    \end{align*}
+  $$
+</MathBox>
+
+<MathBox type="example" name="2">
+  จงกระจาย $\left(x+\frac{1}{x}\right)^4$
+
+  **วิธีทำ** 
+  $$
+    \begin{align*}
+        (x + \frac{1}{x})^4  &= \binom{4}{0} x^4 (\frac{1}{x})^0 + \binom{4}{1} x^{3} (\frac{1}{x})^1 + \binom{4}{2} x^{2} (\frac{1}{x})^2 + \binom{4}{3} x^{1} (\frac{1}{x})^3 + \binom{4}{4} x^{0} (\frac{1}{x})^4    \\
+                    &= 1\cdot x^4 + 4\cdot x^{3}\cdot\frac{1}{x} + 6\cdot x^{2}\cdot\frac{1}{x^2} + 4\cdot x\cdot\frac{1}{x^3} + 1\cdot \frac{1}{x^4}    \\
+                   &= x^4 + 4x^{2} + 6 + 4\cdot\frac{1}{x^{2}} + \frac{1}{x^4}
+    \end{align*}
+  $$
+</MathBox>
+
+<MathBox type="example" name="3">
+  จงกระจาย $\left(x-2y\right)^4$
+
+  **วิธีทำ** 
+  $$
+    \begin{align*}
+        (x - 2y)^4  &= \binom{4}{0} x^4 (-2y)^0 + \binom{4}{1} x^{3} (-2y)^1 + \binom{4}{2} x^{2} (-2y)^2 + \binom{4}{3} x^{1} (-2y)^3 + \binom{4}{4} x^{0} (-2y)^4    \\
+                    &= 1\cdot x^4 + 4\cdot x^{3}(-2y) + 6\cdot x^{2}(-2y)^2 + 4\cdot x(-2y)^3 + 1\cdot (-2y)^4    \\
+                   &= x^4 - 8x^{3}y + 24x^{2}y^2 - 32xy^3 + 16y^4
+    \end{align*}
+  $$
+</MathBox>
+
+
+<Callout>นี่คือข้อความแบบ `info` — ใช้เมื่อต้องการเพิ่มข้อมูลที่เป็นประโยชน์แต่ไม่จำเป็นต้องอ่าน</Callout>
+
+
+
+
+
+  
+
+## 2. การหักเห (Refraction) ของคลื่น  
+
+
+
+ 

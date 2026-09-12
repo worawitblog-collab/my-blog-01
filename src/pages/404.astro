@@ -1,0 +1,114 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="ไม่พบหน้า">
+  <section class="not-found">
+    <div class="illustration">
+      <svg viewBox="0 0 320 180" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <text x="30" y="110" font-family="Georgia, 'Times New Roman', serif" font-size="64" font-weight="bold" fill="var(--accent)" opacity="0.15">x</text>
+        <text x="95" y="110" font-family="Georgia, 'Times New Roman', serif" font-size="64" font-weight="bold" fill="var(--text-muted)">+</text>
+        <text x="150" y="110" font-family="Georgia, 'Times New Roman', serif" font-size="72" font-weight="bold" fill="var(--accent)">?</text>
+        <text x="215" y="110" font-family="Georgia, 'Times New Roman', serif" font-size="64" font-weight="bold" fill="var(--text-muted)">=</text>
+        <text x="260" y="110" font-family="Georgia, 'Times New Roman', serif" font-size="52" font-weight="bold" fill="var(--accent)" opacity="0.35">404</text>
+        <line x1="140" y1="130" x2="190" y2="130" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" opacity="0.5" />
+      </svg>
+    </div>
+
+    <h1 class="code">404</h1>
+    <p class="message">ไม่พบหน้าที่คุณกำลังมองหา</p>
+    <p class="hint">อาจถูกย้าย ลบ หรือไม่เคยมีอยู่จริง</p>
+    <a href="/" class="home-btn">กลับหน้าแรก →</a>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - var(--header-h) - 120px);
+    text-align: center;
+    padding: 2rem 1rem;
+  }
+
+  .illustration {
+    width: 280px;
+    max-width: 80vw;
+    margin-bottom: 1.5rem;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .illustration svg {
+    width: 100%;
+    height: auto;
+  }
+
+  .code {
+    font-size: clamp(4rem, 12vw, 8rem);
+    font-weight: 700;
+    margin: 0;
+    line-height: 1;
+    color: var(--accent);
+    opacity: 0;
+    animation: fadeIn 0.6s ease forwards;
+  }
+
+  .message {
+    font-size: 1.35rem;
+    font-weight: 600;
+    margin: 0.75rem 0 0.25rem;
+    opacity: 0;
+    animation: slideUp 0.5s ease 0.2s forwards;
+  }
+
+  .hint {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin: 0 0 2rem;
+    opacity: 0;
+    animation: slideUp 0.5s ease 0.3s forwards;
+  }
+
+  .home-btn {
+    display: inline-block;
+    padding: 0.7rem 1.7rem;
+    background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+    color: #fff;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    box-shadow: 0 1px 2px rgb(15 46 49 / 0.08), 0 6px 18px -8px color-mix(in srgb, var(--accent) 70%, transparent);
+    transition: filter 0.15s ease, box-shadow 0.15s ease, opacity 0.2s ease;
+    opacity: 0;
+    animation: slideUp 0.5s ease 0.4s forwards;
+  }
+
+  .home-btn:hover {
+    filter: brightness(1.06);
+    box-shadow: 0 2px 4px rgb(15 46 49 / 0.1), 0 10px 24px -10px color-mix(in srgb, var(--accent) 85%, transparent);
+    text-decoration: none;
+  }
+
+  .home-btn:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 4px var(--accent-soft), 0 0 0 7px color-mix(in srgb, var(--accent) 45%, transparent);
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>

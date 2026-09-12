@@ -1,5 +1,22 @@
-// @ts-check
 import { defineConfig } from 'astro/config';
+import mdx from '@astrojs/mdx';
+import { unified } from '@astrojs/markdown-remark';
+import remarkMath from 'remark-math';
+import rehypeMathjax from 'rehype-mathjax';
 
-// https://astro.build/config
-export default defineConfig({});
+export default defineConfig({
+  markdown: {
+    processor: unified({
+      remarkPlugins: [remarkMath],
+      rehypePlugins: [rehypeMathjax],
+    }),
+  },
+  integrations: [
+    mdx({
+      processor: unified({
+        remarkPlugins: [remarkMath],
+        rehypePlugins: [rehypeMathjax],
+      }),
+    }),
+  ],
+});

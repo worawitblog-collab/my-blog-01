@@ -1,0 +1,20 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0c1a2e"/>
+      <stop offset="100%" stop-color="#1a3a5c"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#bg)"/>
+  <g opacity="0.15" fill="none" stroke="#fb923c" stroke-width="2">
+    <path d="M100 225 Q200 100 300 225 Q400 350 500 225 Q600 100 700 225"/>
+    <line x1="100" y1="225" x2="700" y2="225" stroke-dasharray="6,4"/>
+  </g>
+  <g opacity="0.12" fill="none" stroke="#5eead4" stroke-width="1.5">
+    <ellipse cx="400" cy="225" rx="60" ry="15" transform="rotate(-30 400 225)"/>
+    <ellipse cx="400" cy="225" rx="60" ry="15" transform="rotate(30 400 225)"/>
+    <circle cx="400" cy="225" r="8" fill="#5eead4"/>
+  </g>
+  <text x="400" y="400" text-anchor="middle" font-size="42" font-weight="bold" fill="#dbeafe" font-family="system-ui, sans-serif">Simple Harmonic Motion</text>
+  <text x="400" y="430" text-anchor="middle" font-size="18" fill="#fb923c" font-family="system-ui, sans-serif">à¸à¸²à¸£à¹€à¸„à¸¥à¸·à¹ˆà¸­à¸™à¸—à¸µà¹ˆà¹à¸šà¸šà¸®à¸²à¸£à¹Œà¸¡à¸­à¸™à¸´à¸à¸­à¸¢à¹ˆà¸²à¸‡à¸‡à¹ˆà¸²à¸¢</text>
+</svg>

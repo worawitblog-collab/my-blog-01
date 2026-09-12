@@ -1,0 +1,111 @@
+---
+title: "Math Cheat Sheet for Astro MDX"
+description: "ตัวอย่างการใช้งานสมการคณิตศาสตร์ในไฟล์ MDX (MathJax)"
+pubDate: 2026-08-25
+cover: '/covers/trigonometry-identities.svg'
+category: "math"
+tags: ["mdx", "Mathematics", "Katex"]
+author: Worawit
+draft: true
+---
+
+# ตัวอย่างการใช้งานสมการคณิตศาสตร์ (MathJax) ใน MDX
+
+ในไฟล์นี้จะแสดงวิธีการเขียนสมการคณิตศาสตร์หลายๆ รูปแบบ เพื่อให้คุณนำไปปรับใช้ในบล็อก Astro ของคุณครับ
+
+## 1. การเขียนสมการแบบ Inline (ในบรรทัดเดียวกัน)
+สมการแบบ Inline จะถูกแทรกไว้ในข้อความปกติ โดยใช้เครื่องหมาย `$` ครอบหน้าหลัง เช่น:
+- สูตรพื้นที่วงกลมคือ $A = \pi r^2$
+- ทฤษฎีบทพีทาโกรัส $a^2 + b^2 = c^2$
+- ตัวห้อย (Subscript) และตัวยก (Superscript): $x_1, x_2, x_{max}, y^3, e^{i\pi}$
+
+## 2. การเขียนสมการแบบ Block (ขึ้นบรรทัดใหม่และจัดกึ่งกลาง)
+สมการแบบ Block เหมาะสำหรับสมการยาวๆ หรือต้องการเน้น โดยใช้เครื่องหมาย `$$` ครอบหน้าหลัง:
+
+$$
+x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+$$
+
+## 3. เศษส่วนและทวินาม (Fractions & Binomials)
+ใช้คำสั่ง `\frac{numerator}{denominator}` และ `\binom{n}{k}`:
+
+$$
+f(x) = \frac{x^2 - 1}{x + 1}
+$$
+
+$$
+\binom{n}{k} = \frac{n!}{k!(n-k)!}
+$$
+
+## 4. ผลรวม, อินทิกรัล และ ลิมิต (Sums, Integrals, Limits)
+สังเกตว่าการใช้ `{ }` จะช่วยระบุขอบเขตของตัวบนและตัวล่างเพื่อไม่ให้แสดงผลผิดพลาด:
+
+**ผลรวม (Summation):**
+$$
+\sum_{i=1}^{n} i = \frac{n(n+1)}{2}
+$$
+
+**อินทิกรัล (Integral):**
+$$
+\int_{a}^{b} x^2 \,dx = \left[ \frac{x^3}{3} \right]_{a}^{b} = \frac{b^3 - a^3}{3}
+$$
+
+**ลิมิต (Limit):**
+$$
+\lim_{x \to 0} \frac{\sin x}{x} = 1
+$$
+
+## 5. เมทริกซ์ (Matrices)
+การสร้างเมทริกซ์จะใช้ `\begin{pmatrix} ... \end{pmatrix}` หรือ `bmatrix` สำหรับวงเล็บเหลี่ยม:
+
+$$
+A = \begin{pmatrix}
+1 & 2 & 3 \\
+4 & 5 & 6 \\
+7 & 8 & 9
+\end{pmatrix}
+$$
+
+$$
+B = \begin{bmatrix}
+a_{11} & a_{12} \\
+a_{21} & a_{22}
+\end{bmatrix}
+$$
+
+## 6. อักษรกรีกและสัญลักษณ์พิเศษ (Greek Letters & Symbols)
+- **อักษรกรีก:** $\alpha, \beta, \gamma, \Delta, \Omega, \theta, \Sigma$
+- **เซต:** $\mathbb{R}, \mathbb{N}, \mathbb{Z} \subset \mathbb{Q}, \emptyset$
+- **สัญลักษณ์อื่นๆ:** $\infty, \approx, \neq, \leq, \geq, \times, \div, \pm, \mp$
+
+## 7. สมการหลายบรรทัด (Aligned Equations)
+หากต้องการจัดตำแหน่งเครื่องหมาย `=` ให้ตรงกัน ให้ใช้ `\begin{aligned} ... \end{aligned}` (มีประโยชน์มากในการแสดงวิธีทำ):
+
+$$
+\begin{aligned}
+(x+y)^2 &= (x+y)(x+y) \\
+        &= x^2 + xy + xy + y^2 \\
+        &= x^2 + 2xy + y^2
+\end{aligned}
+$$
+
+## 8. ระบบสมการ (Cases)
+ใช้แสดงเงื่อนไขที่แตกต่างกัน:
+
+$$
+f(x) = \begin{cases} 
+x^2 & \text{if } x \geq 0 \\
+-x & \text{if } x < 0 
+\end{cases}
+$$
+
+## 9. การใช้งานร่วมกับ UI Components (จุดเด่นของ MDX)
+คุณสามารถแทรก HTML, JSX หรือ Astro Component ลงมาระหว่างสมการคณิตศาสตร์ได้เลย เช่น:
+
+<div style={{ padding: '1rem', backgroundColor: '#f3f4f6', borderRadius: '8px', color: '#1f2937', marginTop: '1rem' }}>
+  **นี่คือกล่องข้อความที่สร้างจาก HTML/JSX ใน MDX**
+  
+  สมการควอนตัมของชเรอดิงเงอร์ (Schrödinger Equation) คือ:
+  
+  $$ i\hbar\frac{\partial}{\partial t} \Psi(\mathbf{r},t) = \left [ \frac{-\hbar^2}{2\mu}\nabla^2 + V(\mathbf{r},t)\right ] \Psi(\mathbf{r},t) $$
+</div>

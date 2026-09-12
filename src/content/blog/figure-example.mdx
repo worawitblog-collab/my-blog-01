@@ -1,0 +1,51 @@
+---
+title: 'ตัวอย่างการใช้คอมโพเนนท์ Figure'
+description: 'ตัวอย่างการแทรกรูปภาพในบทความด้วยคอมโพเนนท์ Figure.astro'
+category: computer
+cover: '/covers/computer.svg'
+pubDate: 2026-08-28
+tags: ['ตัวอย่าง', 'Figure']
+author: admin
+draft: true
+---
+
+import Figure from '../../components/Figure.astro';
+
+## 1. รูปพื้นฐานพร้อมคำอธิบาย
+
+ใช้แค่ `src` กับ `alt` และระบุ `caption` เมื่อต้องการคำอธิบายใต้ภาพ:
+
+<Figure
+  src="/covers/binary-search.svg"
+  alt="ภาพแสดงหลักการของ Binary Search"
+  caption="รูปที่ 1: หลักการตัดครึ่งของ Binary Search"
+/>
+
+## 2. รูปแบบไม่ระบุคำอธิบาย
+
+ถ้าไม่ส่ง prop `caption` จะแสดงเฉพาะตัวรูป:
+
+<Figure src="/covers/math.svg" alt="ภาพแทนบทความหมวดคณิตศาสตร์" />
+
+## 3. กำหนดขนาดรูป
+
+ใช้ `width` และ `height` เพื่อระบุขนาดที่แน่นอนของภาพ:
+
+<Figure
+  src="/covers/physics.svg"
+  alt="ภาพแทนบทความหมวดฟิสิกส์"
+  width={600}
+  height={338}
+  caption="รูปที่ 2: ระบุขนาดภาพ 600×338 พิกเซล"
+/>
+
+## 4. รูปที่โหลดทันที
+
+ปกติรูปจะโหลดแบบ lazy แต่ถ้าอยากให้โหลดพร้อมกับหน้าเว็บ ตั้ง `loading="eager"`:
+
+<Figure
+  src="/covers/big-o-notation.svg"
+  alt="ภาพแสดง Big-O Notation"
+  loading="eager"
+  caption="รูปที่ 3: โหลดทันทีพร้อมหน้าเว็บ"
+/>

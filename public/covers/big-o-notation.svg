@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b1220"/>
+      <stop offset="100%" stop-color="#134e4a"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#bg)"/>
+  <g opacity="0.12" fill="none" stroke="#2dd4bf" stroke-width="1.5">
+    <line x1="150" y1="320" x2="150" y2="100"/>
+    <line x1="150" y1="320" x2="700" y2="320"/>
+    <path d="M150 300 Q250 290 300 250 Q350 200 400 150 Q450 100 500 70 Q550 50 600 35"/>
+    <path d="M150 310 Q300 305 400 280 Q500 240 600 160 Q650 100 700 50" stroke-dasharray="4,4"/>
+  </g>
+  <g opacity="0.15" fill="none" stroke="#5eead4" stroke-width="1">
+    <text x="200" y="180" font-size="14" font-family="monospace" fill="#5eead4">O(n)</text>
+    <text x="350" y="120" font-size="14" font-family="monospace" fill="#5eead4">O(n log n)</text>
+    <text x="500" y="80" font-size="14" font-family="monospace" fill="#5eead4">O(n²)</text>
+    <text x="600" y="50" font-size="14" font-family="monospace" fill="#5eead4">O(2ⁿ)</text>
+  </g>
+  <text x="400" y="400" text-anchor="middle" font-size="42" font-weight="bold" fill="#99f6e4" font-family="system-ui, sans-serif">Big-O Notation</text>
+  <text x="400" y="430" text-anchor="middle" font-size="18" fill="#2dd4bf" font-family="system-ui, sans-serif">วัดความเร็วของอัลกอริทึม</text>
+</svg>

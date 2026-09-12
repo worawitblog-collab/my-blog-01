@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a0a2e"/>
+      <stop offset="100%" stop-color="#3b1578"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#bg)"/>
+  <g opacity="0.12" fill="none" stroke="#d946ef" stroke-width="1">
+    <text x="80" y="120" font-size="80" font-family="serif" font-weight="bold">2</text>
+    <text x="180" y="120" font-size="80" font-family="serif" font-weight="bold">3</text>
+    <text x="280" y="120" font-size="80" font-family="serif" font-weight="bold">5</text>
+    <text x="380" y="120" font-size="80" font-family="serif" font-weight="bold">7</text>
+    <text x="480" y="120" font-size="80" font-family="serif" font-weight="bold">11</text>
+    <text x="600" y="120" font-size="80" font-family="serif" font-weight="bold">13</text>
+  </g>
+  <g opacity="0.15" fill="none" stroke="#e879f9" stroke-width="2">
+    <rect x="300" y="180" width="200" height="120" rx="12"/>
+    <text x="400" y="255" text-anchor="middle" font-size="24" font-family="monospace" fill="#e879f9">p × q = n</text>
+  </g>
+  <text x="400" y="400" text-anchor="middle" font-size="36" font-weight="bold" fill="#f5d0fe" font-family="system-ui, sans-serif">Primes &amp; Cryptography</text>
+  <text x="400" y="430" text-anchor="middle" font-size="18" fill="#d946ef" font-family="system-ui, sans-serif">จำนวนเฉพาะและการเข้ารหัสลับ RSA</text>
+</svg>

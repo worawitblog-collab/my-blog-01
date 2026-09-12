@@ -1,0 +1,135 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { CATEGORIES, formatDate } from '../lib/site';
+import Breadcrumb from '../components/Breadcrumb.astro';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => (b.data.updatedDate ?? b.data.pubDate).valueOf() - (a.data.updatedDate ?? a.data.pubDate).valueOf(),
+);
+
+const index = posts.map((post) => ({
+  id: post.id,
+  title: post.data.title,
+  description: post.data.description,
+  category: post.data.category,
+  categoryLabel: CATEGORIES[post.data.category].label,
+  tags: post.data.tags,
+  author: post.data.author,
+  cover: post.data.cover ?? CATEGORIES[post.data.category].cover,
+  pubDate: post.data.pubDate.toISOString(),
+  dateLabel: formatDate(post.data.pubDate),
+}));
+---
+
+<BaseLayout title="ค้นหา">
+  <Breadcrumb items={[{ label: 'ค้นหา' }]} />
+  <div class="page-head">
+    <h1>ค้นหาบทความ</h1>
+    <p>พิมพ์คำสำคัญเพื่อค้นหาในบทความทั้งหมด</p>
+  </div>
+
+  <div class="search-bar">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+    <input
+      id="search-input"
+      type="search"
+      placeholder="ค้นหาด้วยชื่อบทความ แท็ก หรือหมวดหมู่…"
+      autocomplete="off"
+      autofocus
+      aria-label="ช่องค้นหาบทความ"
+    />
+    <button type="button" id="search-clear" class="search-clear" aria-label="ล้างการค้นหา" hidden>✕</button>
+  </div>
+
+  <p id="search-count" class="search-count" role="status" hidden></p>
+
+  <div id="search-results" class="search-results"></div>
+
+  <script define:vars={{ index }}>
+    const input = document.getElementById('search-input');
+    const clearBtn = document.getElementById('search-clear');
+    const countEl = document.getElementById('search-count');
+    const listEl = document.getElementById('search-results');
+
+    const ESC = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;',
+    };
+    function esc(s) {
+      return s.replace(/[&<>"']/g, (c) => ESC[c]);
+    }
+    function normalize(s) {
+      return s.toLowerCase().trim();
+    }
+
+    function renderPost(p) {
+      const tags = p.tags
+        .map((t) => `<a class="tag-pill" href="/tags/${t}">#${esc(t)}</a>`)
+        .join('');
+      return `<div class="blog-entry">
+  <div class="blog-entry__meta">
+    <time datetime="${p.pubDate}">${esc(p.dateLabel)}</time>
+    <div class="blog-entry__tags">
+      <a class="tag-pill" href="/category/${p.category}">${esc(p.categoryLabel)}</a>
+      ${tags}
+    </div>
+  </div>
+  <a class="blog-entry__content" href="/blog/${p.id}">
+    <img class="blog-entry__img" src="${p.cover}" alt="${esc(p.title)}" loading="lazy" />
+    <div class="blog-entry__text">
+      <h3>${esc(p.title)}</h3>
+      <p class="blog-entry__author">โดย ${esc(p.author)}</p>
+      <p class="blog-entry__desc">${esc(p.description)}</p>
+    </div>
+  </a>
+</div>`;
+    }
+
+    function render(query) {
+      const q = normalize(query);
+      const terms = q.split(/\s+/).filter(Boolean);
+
+      if (!terms.length) {
+        if (countEl) countEl.hidden = true;
+        if (clearBtn) clearBtn.hidden = true;
+        if (listEl) listEl.innerHTML = '';
+        return;
+      }
+
+      const matches = index.filter((p) => {
+        const hay = normalize(
+          [p.title, p.description, p.categoryLabel, p.author, ...p.tags].join(' '),
+        );
+        return terms.every((t) => hay.includes(t));
+      });
+
+      if (countEl) {
+        countEl.hidden = false;
+        countEl.textContent = matches.length
+          ? `พบ ${matches.length} รายการ`
+          : 'ไม่พบผลการค้นหา';
+      }
+      if (clearBtn) clearBtn.hidden = !q;
+      if (listEl) {
+        listEl.innerHTML = matches.length
+          ? matches.map(renderPost).join('')
+          : `<div class="empty-note"><p>ไม่พบบทความที่ตรงกับ <strong>"${esc(query)}"</strong></p></div>`;
+      }
+    }
+
+    input?.addEventListener('input', () => render(input.value));
+    clearBtn?.addEventListener('click', () => {
+      if (input) {
+        input.value = '';
+        render('');
+        input.focus();
+      }
+    });
+
+    render(input?.value ?? '');
+  </script>
+</BaseLayout>

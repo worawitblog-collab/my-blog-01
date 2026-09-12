@@ -1,0 +1,46 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import Pagination from '../../components/Pagination.astro';
+
+export async function getStaticPaths({ paginate }) {
+  const posts = (
+    await getCollection('blog', ({ data }) => !data.draft)
+  ).sort(
+    (a, b) => (b.data.updatedDate ?? b.data.pubDate).valueOf() - (a.data.updatedDate ?? a.data.pubDate).valueOf(),
+  );
+  return paginate(posts, { pageSize: 5 });
+}
+
+const { page } = Astro.props;
+const posts = page.data;
+---
+
+<BaseLayout title="บทความทั้งหมด" description="รวมบทความคณิตศาสตร์ ฟิสิกส์ และคอมพิวเตอร์ทั้งหมด">
+  <Breadcrumb items={[{ label: 'บล็อก' }]} />
+
+  <div class="page-head">
+    <h1>บทความทั้งหมด</h1>
+    <p>{page.total} บทความ เรียงจากใหม่ไปเก่า</p>
+  </div>
+
+  {
+    posts.length > 0 ? (
+      <div class="blog-list">
+        {posts.map((post) => (
+          <PostCard post={post} />
+        ))}
+      </div>
+    ) : (
+      <div class="empty-note">
+        <p>
+          ยังไม่มีบทความ — สร้างไฟล์ใหม่ใน <code>src/content/blog/</code>
+        </p>
+      </div>
+    )
+  }
+
+  <Pagination page={page} basePath="/blog" />
+</BaseLayout>

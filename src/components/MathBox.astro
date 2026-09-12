@@ -1,0 +1,86 @@
+---
+interface Props {
+  type: 'definition' | 'rule' | 'property' | 'theorem' | 'corollary' | 'example';
+  name?: string;
+  id?: string;
+}
+
+const { type, name, id } = Astro.props;
+
+const meta: Record<string, { label: string; color: string }> = {
+  definition: { label: 'บทนิยาม', color: '#0f766e' },
+  rule: { label: 'กฎ', color: '#0ea5e9' },
+  property: { label: 'สมบัติ', color: '#14b8a6' },
+  theorem: { label: 'ทฤษฎีบท', color: '#6d28d9' },
+  corollary: { label: 'บทแทรก', color: '#15803d' },
+  example: { label: 'ตัวอย่าง', color: '#0d9488' },
+};
+
+const m = meta[type];
+---
+
+<div class="mathbox" id={id} style={`--box-color:${m.color}`}>
+  <div class="mathbox__head">
+    <span class="mathbox__badge">{m.label}</span>
+    {name && <span class="mathbox__name">{name}</span>}
+  </div>
+  <div class="mathbox__body">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .mathbox {
+    margin: 1.5rem 0;
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--box-color);
+    background:
+      linear-gradient(180deg, color-mix(in srgb, var(--box-color) 7%, transparent), transparent 55%),
+      var(--surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .mathbox__head {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.55rem 1.15rem 0;
+    border-bottom: 1px dashed var(--border);
+  }
+
+  .mathbox__badge {
+    display: inline-block;
+    padding: 0.15rem 0.85rem;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--box-color);
+    background: color-mix(in srgb, var(--box-color) 12%, transparent);
+    transform: translateY(0.6rem);
+  }
+
+  .mathbox__name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    transform: translateY(0.6rem);
+  }
+
+  .mathbox__body {
+    padding: 1.1rem 1.25rem 1.15rem;
+  }
+
+  .mathbox__body :global(p) {
+    margin: 0.35rem 0;
+  }
+
+  .mathbox__body :global(p:first-child) {
+    margin-top: 0;
+  }
+
+  .mathbox__body :global(p:last-child) {
+    margin-bottom: 0;
+  }
+</style>

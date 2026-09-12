@@ -1,0 +1,61 @@
+---
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import PostCard from '../../../components/PostCard.astro';
+import Breadcrumb from '../../../components/Breadcrumb.astro';
+import Pagination from '../../../components/Pagination.astro';
+
+export async function getStaticPaths({ paginate }) {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  const tags = [...new Set(posts.flatMap((post) => post.data.tags))];
+
+  const paths = [];
+
+  for (const tag of tags) {
+    const tagPosts: CollectionEntry<'blog'>[] = (
+      await getCollection('blog', (post) => post.data.tags.includes(tag) && !post.data.draft)
+    ).sort(
+      (a, b) => (b.data.updatedDate ?? b.data.pubDate).valueOf() - (a.data.updatedDate ?? a.data.pubDate).valueOf(),
+    );
+
+    const result = paginate(tagPosts, {
+      pageSize: 5,
+      params: { tag },
+    });
+
+    paths.push(...result);
+  }
+
+  return paths;
+}
+
+const { tag } = Astro.params;
+const { page } = Astro.props;
+const posts = page.data;
+---
+
+<BaseLayout title={`#${tag}`} description={`บทความที่ติดแท็ก #${tag}`}>
+  <Breadcrumb items={[{ label: 'แท็ก', href: '/tags' }, { label: `#${tag}` }]} />
+
+  <div class="page-head">
+    <h1>#{tag}</h1>
+    <p>{page.total} บทความ · <a href="/tags">← ดูทุกแท็ก</a></p>
+  </div>
+
+  {
+    posts.length > 0 ? (
+      <div class="blog-list">
+        {posts.map((post) => (
+          <PostCard post={post} />
+        ))}
+      </div>
+    ) : (
+      <div class="empty-note">
+        <p>ยังไม่มีบทความในแท็กนี้</p>
+      </div>
+    )
+  }
+
+  <Pagination page={page} basePath={`/tags/${tag}`} />
+</BaseLayout>

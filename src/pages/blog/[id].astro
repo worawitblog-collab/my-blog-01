@@ -1,0 +1,93 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Toc from '../../components/Toc.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import Figure from '../../components/Figure.astro';
+import { CATEGORIES, formatDate } from '../../lib/site';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((entry) => ({
+    params: { id: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content, headings } = await render(entry);
+const { title, description, category, cover, pubDate, updatedDate, tags } = entry.data;
+const meta = CATEGORIES[category];
+
+const ordered = (await getCollection('blog', (post) => !post.data.draft)).sort(
+  (a, b) => (b.data.updatedDate ?? b.data.pubDate).valueOf() - (a.data.updatedDate ?? a.data.pubDate).valueOf(),
+);
+const currentIndex = ordered.findIndex((post) => post.id === entry.id);
+const prev = currentIndex > 0 ? ordered[currentIndex - 1] : null;
+const next = currentIndex < ordered.length - 1 ? ordered[currentIndex + 1] : null;
+---
+
+<BaseLayout title={title} description={description}>
+  <Breadcrumb items={[{ label: 'บล็อก', href: '/blog' }, { label: title }]} />
+
+  <div class="prose">
+    <article>
+      <div class="post-meta">
+        <a class="badge" href={`/category/${category}`} style={`--badge-color:${meta.color}`}>
+          {meta.label}
+        </a>
+        <time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time>
+        {
+          updatedDate && (
+            <span>(อัปเดตล่าสุด {formatDate(updatedDate)})</span>
+          )
+        }
+      </div>
+      <h1>{title}</h1>
+      <p class="lead">{description}</p>
+
+      <Figure
+        src={cover ?? meta.cover}
+        alt={title}
+        loading="eager"
+      />
+
+      <Content />
+
+      {
+        tags.length > 0 && (
+          <div class="post-meta" style="margin-top:2.5rem">
+            {tags.map((tag) => (
+              <a class="badge" href={`/tags/${tag}`}>#{tag}</a>
+            ))}
+          </div>
+        )
+      }
+    </article>
+  </div>
+
+  <Toc headings={headings} />
+
+  <nav class="post-nav" aria-label="ไปยังบทความก่อนหน้าและถัดไป">
+    {
+      prev ? (
+        <a class="post-nav__item" href={`/blog/${prev.id}`}>
+          <span class="post-nav__label">← บทความก่อนหน้า</span>
+          <span class="post-nav__title">{prev.data.title}</span>
+        </a>
+      ) : (
+        <span class="post-nav__item post-nav__item--empty" />
+      )
+    }
+    {
+      next ? (
+        <a class="post-nav__item post-nav__item--right" href={`/blog/${next.id}`}>
+          <span class="post-nav__label">บทความถัดไป →</span>
+          <span class="post-nav__title">{next.data.title}</span>
+        </a>
+      ) : (
+        <span class="post-nav__item post-nav__item--empty" />
+      )
+    }
+  </nav>
+</BaseLayout>

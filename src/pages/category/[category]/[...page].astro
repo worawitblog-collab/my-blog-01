@@ -1,0 +1,90 @@
+---
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import PostCard from '../../../components/PostCard.astro';
+import Breadcrumb from '../../../components/Breadcrumb.astro';
+import Quote from '../../../components/Quote.astro';
+import Pagination from '../../../components/Pagination.astro';
+import { CATEGORIES } from '../../../lib/site';
+
+export async function getStaticPaths({ paginate }) {
+  const paths = [];
+
+  for (const category of Object.keys(CATEGORIES)) {
+    const posts: CollectionEntry<'blog'>[] = (
+      await getCollection('blog', (post) => post.data.category === category && !post.data.draft)
+    ).sort(
+      (a, b) => (b.data.updatedDate ?? b.data.pubDate).valueOf() - (a.data.updatedDate ?? a.data.pubDate).valueOf(),
+    );
+
+    const result = paginate(posts, {
+      pageSize: 5,
+      params: { category },
+    });
+
+    paths.push(...result);
+  }
+
+  return paths;
+}
+
+const { category } = Astro.params;
+const { page } = Astro.props;
+const meta = CATEGORIES[category!];
+const posts = page.data;
+---
+
+<BaseLayout title={meta.label} description={`บทความหมวด${meta.label}`}>
+  <Breadcrumb items={[{ label: 'บล็อก', href: '/blog' }, { label: meta.label }]} />
+
+  <div class="page-top">
+    <div class="page-head" style={`border-left:5px solid ${meta.color};padding-left:1rem`}>
+      <h1>{meta.label}</h1>
+      <p>{meta.description}</p>
+    </div>
+
+    {
+      category === 'math' && (
+        <Quote
+          text="If people do not believe that mathematics is simple, it is only because they do not realize how complicated life is."
+          author="John von Neumann"
+        />
+      )
+    }
+
+    {
+      category === 'computer' && (
+        <Quote
+          text="Computers are like humans – they do everything except think."
+          author="John von Neumann"
+        />
+      )
+    }
+
+    {
+      category === 'physics' && (
+        <Quote
+          text="The good thing about science is that it's true whether or not you believe in it."
+          author="Neil deGrasse Tyson"
+        />
+      )
+    }
+  </div>
+
+  {
+    posts.length > 0 ? (
+      <div class="blog-list">
+        {posts.map((post) => (
+          <PostCard post={post} />
+        ))}
+      </div>
+    ) : (
+      <div class="empty-note">
+        <p>ยังไม่มีบทความในหมวดนี้</p>
+      </div>
+    )
+  }
+
+  <Pagination page={page} basePath={`/category/${category}`} />
+</BaseLayout>

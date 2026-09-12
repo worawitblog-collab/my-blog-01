@@ -1,0 +1,244 @@
+---
+import Icon from './Icon.astro';
+
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isHome = path === '/';
+const blogActive = path.startsWith('/blog') || path.startsWith('/category');
+
+const blogSub = [
+  { href: '/blog', label: 'บทความทั้งหมด', icon: 'list', active: path === '/blog' },
+  { href: '/category/math', label: 'คณิตศาสตร์', icon: 'math', active: path === '/category/math' },
+  { href: '/category/physics', label: 'ฟิสิกส์', icon: 'atom', active: path === '/category/physics' },
+  { href: '/category/computer', label: 'คอมพิวเตอร์', icon: 'computer', active: path === '/category/computer' },
+];
+---
+
+<header class="site-header" id="site-header">
+  <nav class="navbar-inner" aria-label="เมนูหลัก">
+    <a class="brand" href="/">Worawit's&nbsp;Blog</a>
+
+    <ul class="nav-links">
+      <li>
+        <a class:list={[{ active: isHome }]} href="/">
+          <Icon name="home" /> หน้าแรก
+        </a>
+      </li>
+      <li class="dropdown">
+        <button
+          type="button"
+          class="drop-btn"
+          class:list={[{ active: blogActive }]}
+          aria-expanded="false"
+          aria-haspopup="true"
+        >
+          <Icon name="book" /> บล็อก
+          <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <ul class="dropdown-panel">
+          {
+            blogSub.map((item) => (
+              <li>
+                <a class:list={[{ active: item.active }]} href={item.href}>
+                  <Icon name={item.icon} /> {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </li>
+      <li>
+        <a class:list={[{ active: path.startsWith('/downloads') }]} href="/downloads">
+          <Icon name="download" /> ดาวน์โหลด
+        </a>
+      </li>
+      <li>
+        <a class:list={[{ active: path.startsWith('/tags') }]} href="/tags">
+          <Icon name="tag" /> แท็ก
+        </a>
+      </li>
+    </ul>
+
+    <div class="nav-actions">
+      <a class:list={['icon-btn', { active: path === '/search' }]} href="/search" title="ค้นหา" aria-label="ค้นหา">
+        <Icon name="search" size={20} />
+      </a>
+      <button id="theme-toggle" class="icon-btn theme-toggle" type="button" title="ธีม: ตามระบบ" aria-label="สลับโหมดธีม (ปัจจุบัน: ตามระบบ)">
+        <svg class="ic ic-light" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><line x1="12" y1="2" x2="12" y2="5"></line><line x1="12" y1="19" x2="12" y2="22"></line><line x1="4.2" y1="4.2" x2="6.3" y2="6.3"></line><line x1="17.7" y1="17.7" x2="19.8" y2="19.8"></line><line x1="2" y1="12" x2="5" y2="12"></line><line x1="19" y1="12" x2="22" y2="12"></line><line x1="4.2" y1="19.8" x2="6.3" y2="17.7"></line><line x1="17.7" y1="6.3" x2="19.8" y2="4.2"></line></svg>
+        <svg class="ic ic-dark" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="ic ic-system" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+      </button>
+
+      <button id="menu-toggle" class="icon-btn menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-panel" aria-label="เปิดหรือปิดเมนู">
+        <svg class="ic ic-burger" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        <svg class="ic ic-close" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="5" y1="5" x2="19" y2="19"></line><line x1="19" y1="5" x2="5" y2="19"></line></svg>
+      </button>
+    </div>
+  </nav>
+
+  <div class="mobile-panel" id="mobile-panel" hidden>
+    <a class:list={[{ active: isHome }]} href="/">
+      <Icon name="home" size={18} /> หน้าแรก
+    </a>
+
+    <button
+      type="button"
+      id="blog-panel-toggle"
+      class:list={['panel-toggle', { active: blogActive }]}
+      aria-expanded={blogActive ? 'true' : 'false'}
+      aria-controls="blog-sub-panel"
+    >
+      <span class="pt-label"><Icon name="book" size={18} /> บล็อก</span>
+      <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    </button>
+
+    <div class="panel-sub" id="blog-sub-panel" hidden={!blogActive}>
+      {
+        blogSub.map((item) => (
+          <a class:list={[{ active: item.active }]} href={item.href}>
+            <Icon name={item.icon} size={16} /> {item.label}
+          </a>
+        ))
+      }
+    </div>
+
+    <hr />
+    <a class:list={[{ active: path.startsWith('/downloads') }]} href="/downloads">
+      <Icon name="download" size={18} /> ดาวน์โหลด
+    </a>
+    <a class:list={[{ active: path.startsWith('/tags') }]} href="/tags">
+      <Icon name="tag" size={18} /> แท็ก
+    </a>
+  </div>
+</header>
+
+<script>
+  const root = document.documentElement;
+  const ORDER = ['light', 'dark', 'system'] as const;
+  const LABELS: Record<string, string> = {
+    light: 'สว่าง',
+    dark: 'มืด',
+    system: 'ตามระบบ',
+  };
+
+  const themeBtn = document.getElementById('theme-toggle');
+  themeBtn?.addEventListener('click', () => {
+    const cur = ORDER.includes(root.dataset.theme as never)
+      ? (root.dataset.theme as (typeof ORDER)[number])
+      : 'system';
+    const next = ORDER[(ORDER.indexOf(cur) + 1) % ORDER.length];
+    root.dataset.theme = next;
+    localStorage.setItem('theme', next);
+    themeBtn.title = `ธีม: ${LABELS[next]}`;
+    themeBtn.setAttribute('aria-label', `สลับโหมดธีม (ปัจจุบัน: ${LABELS[next]})`);
+  });
+
+  const header = document.getElementById('site-header');
+  const menuBtn = document.getElementById('menu-toggle');
+  const panel = document.getElementById('mobile-panel');
+
+  const blogToggle = document.getElementById('blog-panel-toggle');
+  const blogPanel = document.getElementById('blog-sub-panel');
+
+  function collapseBlogPanel() {
+    blogToggle?.setAttribute('aria-expanded', 'false');
+    if (blogPanel) blogPanel.hidden = true;
+  }
+
+  function closeMenu() {
+    header?.classList.remove('menu-open');
+    menuBtn?.setAttribute('aria-expanded', 'false');
+    if (panel) panel.hidden = true;
+    collapseBlogPanel();
+  }
+
+  menuBtn?.addEventListener('click', () => {
+    const open = (header ?? document.body).classList.toggle('menu-open');
+    menuBtn.setAttribute('aria-expanded', String(open));
+    if (panel) panel.hidden = !open;
+  });
+
+  blogToggle?.addEventListener('click', () => {
+    const open = blogToggle.getAttribute('aria-expanded') === 'true';
+    blogToggle.setAttribute('aria-expanded', String(!open));
+    if (blogPanel) blogPanel.hidden = open;
+  });
+
+  panel?.querySelectorAll('a').forEach((a) => a.addEventListener('click', closeMenu));
+
+  document.querySelectorAll<HTMLButtonElement>('.dropdown > .drop-btn').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const dd = btn.parentElement!;
+      dd.classList.toggle('open');
+      btn.setAttribute('aria-expanded', String(dd.classList.contains('open')));
+    });
+  });
+
+  document.addEventListener('click', () => {
+    document.querySelectorAll('.dropdown.open').forEach((dd) => {
+      dd.classList.remove('open');
+      dd.querySelector('.drop-btn')?.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    closeMenu();
+    document.querySelectorAll('.dropdown.open').forEach((dd) => {
+      dd.classList.remove('open');
+      dd.querySelector('.drop-btn')?.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  const desktopMq = window.matchMedia('(min-width: 901px)');
+
+  function applyViewport() {
+    if (!desktopMq.matches) return;
+    closeMenu();
+    document.querySelectorAll('.dropdown.open').forEach((dd) => {
+      dd.classList.remove('open');
+      dd.querySelector('.drop-btn')?.setAttribute('aria-expanded', 'false');
+    });
+  }
+
+  desktopMq.addEventListener('change', applyViewport);
+  applyViewport();
+
+  // ซ่อน navbar ตอนเลื่อนลง / โผล่กลับตอนเลื่อนขึ้น
+  let lastY = window.scrollY;
+  let ticking = false;
+
+  function onScroll() {
+    ticking = false;
+    const y = window.scrollY;
+    const dy = y - lastY;
+    lastY = y;
+
+    header?.classList.toggle('scrolled', y > 8);
+
+    const menuOpen = header?.classList.contains('menu-open') ?? false;
+
+    if (y < 80 || menuOpen) {
+      header?.classList.remove('nav-hidden');
+      return;
+    }
+
+    if (dy > 4) {
+      header?.classList.add('nav-hidden');
+    } else if (dy < -4) {
+      header?.classList.remove('nav-hidden');
+    }
+  }
+
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(onScroll);
+    },
+    { passive: true },
+  );
+
+  onScroll();
+</script>

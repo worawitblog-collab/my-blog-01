@@ -1,0 +1,14 @@
+---
+interface Props {
+  text: string;
+  author: string;
+}
+
+const { text, author } = Astro.props;
+---
+
+<figure class="quote-card">
+  <span class="q-mark" aria-hidden="true">“</span>
+  <blockquote>{text}</blockquote>
+  <figcaption>— {author}</figcaption>
+</figure>

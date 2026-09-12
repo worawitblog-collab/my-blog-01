@@ -1,0 +1,19 @@
+---
+interface Props {
+  type?: 'info' | 'warning' | 'tip';
+}
+
+const { type = 'info' } = Astro.props;
+
+const styles: Record<string, { icon: string; color: string }> = {
+  info: { icon: 'ℹ️', color: '#0f766e' },
+  warning: { icon: '⚠️', color: '#f59e0b' },
+  tip: { icon: '💡', color: '#0ea5e9' },
+};
+
+const s = styles[type];
+---
+
+<aside style={`border-left:4px solid ${s.color};background:color-mix(in srgb,${s.color} 8%,transparent);padding:0.85rem 1.15rem;border-radius:0 10px 10px 0;margin:1.5rem 0`}>
+  <p style="margin:0"><strong>{s.icon} </strong><slot /></p>
+</aside>
