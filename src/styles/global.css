@@ -1706,6 +1706,19 @@ a.post-nav__item:focus-visible {
   box-shadow: 0 0 0 3px var(--accent-soft), 0 0 0 6px color-mix(in srgb, var(--accent) 40%, transparent);
 }
 
+/* ---------- Giscus comments ---------- */
+
+.giscus-wrap {
+  margin-top: 3rem;
+  max-width: 720px;
+}
+
+.giscus-heading {
+  font-size: 1.4rem;
+  font-weight: 800;
+  margin: 0 0 1.2rem;
+}
+
 .post-nav__item--right {
   text-align: right;
   justify-self: end;
